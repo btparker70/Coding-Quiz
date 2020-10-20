@@ -1,0 +1,21 @@
+body {
+    background-color: purple;
+}
+
+#header-title {
+    font-size: 60px;
+}
+#timerText {
+    text-align: center;
+    font-size: 50px;
+    border-radius: 25px;
+    border: 10px solid white;px;
+    width: 100px;
+    height: 90px;
+    margin-top: -5px;
+    padding-bottom: 75px;
+  }
+
+.timerBox {
+    max-height: 65px;
+}
