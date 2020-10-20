@@ -5,7 +5,8 @@ body {
 #header-title {
     font-size: 60px;
 }
-#timerText {
+
+/* #timerText {
     text-align: center;
     font-size: 50px;
     border-radius: 25px;
@@ -18,4 +19,9 @@ body {
 
 .timerBox {
     max-height: 65px;
+} */
+
+#timerText {
+    font-size: 30px;
+    border-radius: 25px;
 }

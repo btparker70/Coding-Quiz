@@ -21,8 +21,8 @@
                 <div class="col">
                     <h1 id="header-title">JavaScript Quiz</h1>
                 </div>
-                <div class="col-2 timerBox">
-                    <p id="timerText">60</p>
+                <div id="start" class="col-2 btn btn-dark">
+                    <p id="timerText">Start</p>
                 </div>
             </div>
         </div>
@@ -30,14 +30,14 @@
     <!--Main Container-->
     <main class="container">
         <div id="main" class="card card-body">
-            <h2>Libero nisi perferendis quasi alias, delectus amet?</h2>
+            <h2 id="question">Default Question text?</h2>
             <ul id="answers" class="answerBox">
-                <li class="list-group-item">Item 1</li>
-      <li class="list-group-item">Item 2</li>
-      <li class="list-group-item">Item 3</li>
-      <li class="list-group-item">Item 4</li>
+                <li class="list-group-item-action" id="answer1">Item 1</li>
+                <li class="list-group-item-action" id="answer2">Item 2</li>
+                <li class="list-group-item-action" id="answer3">Item 3</li>
+                <li class="list-group-item-action" id="answer4">Item 4</li>
             </ul>
-
+            <div id="next" class="btn btn-dark">next</div>
         </div>
     </main>
 
