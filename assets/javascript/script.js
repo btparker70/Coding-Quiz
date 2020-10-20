@@ -32,20 +32,38 @@ const questions = [
   },
 ];
 
+// START //
+document.getElementById("start").addEventListener('click', function() {
+  start.style.backgroundColor = 'green';
+  // document.getElementById("timerText").style.display = 'none';
+  document.getElementById("timerText").innerText = "60";
+  document.getElementById("main").style.display = 'block';
+  countDown();
+
+})
+
+  // Timer
+  var clockStart = 60;
+  function countDown() {
+    setInterval(function(){ 
+      clockStart--;
+      document.getElementById("timerText").innerText = clockStart;
+      // if (clockStart = 56) {
+      //   return;
+      // }
+    }, 1000);
+  }
+
+
+
 // QUIZ FUNCTIONALITY //
-
 // Quiz poppulation
-
-
-
   var i = 0;
   document.querySelector("#question").innerHTML = questions[i].question;
   document.querySelector("#answer1").innerHTML = questions[i].answers.a;
   document.querySelector("#answer2").innerHTML = questions[i].answers.b;
   document.querySelector("#answer3").innerHTML = questions[i].answers.c;
   document.querySelector("#answer4").innerHTML = questions[i].answers.d;
-
-
 
 //var.event.target.getattribute(#id)
 //function
@@ -67,10 +85,7 @@ document.getElementById('next').addEventListener('click', function() {
   document.querySelector("#answer4").innerHTML = questions[i].answers.d;
 })
 
-document.getElementById("start").addEventListener('click', function() {
-  start.style.backgroundColor = 'green';
-  
-})
+
 
 
 // //button that changes color. change div colors
