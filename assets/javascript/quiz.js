@@ -59,7 +59,6 @@ var correctAnswers = [
   questions[3].answers.d, 
   questions[4].answers.c];
 
-console.log(questions[0].correctAnswer);
 // QUIZ FUNCTIONALITY //
 
 // Start button
@@ -152,9 +151,18 @@ document.getElementById('next').addEventListener('click', function () {
   // End
   if (i == (questions.length - 1)){
   document.getElementById('next').innerText = 'End'
+  document.getElementById('highScore').style.display = 'block';
   }
 })
 
+// High score button
+document.getElementById("highScore").onclick = function () {
+  location.href = "highscores.html";
+}
+
+var score = 1;
+localStorage.setItem("high score", score);
+console.log(localStorage.getItem("high score"));
 // End button
 // if (document.getElementById('next').innerText = 'End') {
 //   document.getElementById('next').onclick = function () {
