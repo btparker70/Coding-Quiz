@@ -30,14 +30,14 @@
     <!--Main Container-->
     <main class="container">
         <div id="main" class="card card-body" style="display:block">
-            <h2 id="question">Default Question text?</h2>
-            <ul id="answers" class="list-group">
-                <li class="list-group-item-action" id="answer1">Item 1</li>
-                <li class="list-group-item-action" id="answer2">Item 2</li>
-                <li class="list-group-item-action" id="answer3">Item 3</li>
-                <li class="list-group-item-action" id="answer4">Item 4</li>
-            </ul>
-            <div id="next" class="btn btn-dark">next</div>
+            <h2 id="question">Enter name</h2>
+            <input id="first-name" class="form-control form-control-lg" type="text" placeholder="Your Name">
+            <!--High Scores-->
+            <div class="card">
+                <h2>Previous High Scores</h2>
+                <p><strong>Name:</strong> <span id="user-first-name"></span></p>
+            </div>
+            <div id="submit" class="btn btn-dark">Submit</div>
         </div>
     </main>
 
