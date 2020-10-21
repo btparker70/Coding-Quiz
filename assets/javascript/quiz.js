@@ -21,7 +21,7 @@ const questions = [
     correctAnswer: "var x = 0;"
   },
   {
-    question: "How do you write a confirm box?",
+    question: "How do you write an alert box?",
     answers: {
       a: "alert()",
       b: "confirm()",
@@ -62,26 +62,38 @@ var correctAnswers = [
 // QUIZ FUNCTIONALITY //
 
 var clockStart = 60;
-
+var startClicks = 0;
 // Start button
 document.getElementById("start").addEventListener('click', function () {
-  document.getElementById("timerText").innerText = "60";
+  document.getElementById("timerText").innerText = clockStart;
   document.getElementById("main").style.display = 'block';
-  countDown();
+  // countDown();
 
- 
+
   // Timer
   // var clockStart = 60;
-  function countDown() {
-    setInterval(function () {
-      clockStart--;
-      document.getElementById("timerText").innerText = clockStart;
-    }, 1000);
+  // function countDown() {
+  //   setInterval(function () {
+  //     clockStart--;
+  //     document.getElementById("timerText").innerText = clockStart;
+  //   }, 1000);
+  // }
+  var clock = setInterval(clockTimer, 1000);
+
+  function clockTimer() {
+    clockStart--;
+    document.getElementById("timerText").innerText = clockStart;
   }
+
+  // startClicks++;
+  // function stopClockTimer() {
+  //   clearInterval(clock);
+  // }
 })
 
 // Quiz population
 var i = 0;
+console.log('i= ' + i);
 document.querySelector("#question").innerHTML = questions[i].question;
 document.querySelector("#answer1").innerHTML = questions[i].answers.a;
 document.querySelector("#answer2").innerHTML = questions[i].answers.b;
@@ -96,8 +108,8 @@ var choice4 = document.getElementById("answer4");
 
 // Select choice
 choice1.addEventListener('click', function () {
-  console.log(choice1.innerText);
   if (correctAnswers.indexOf(choice1.innerText) !== -1) {
+    i++;
     nextQuestion();
   } else {
     choice1.style.backgroundColor = 'red';
@@ -107,35 +119,35 @@ choice1.addEventListener('click', function () {
 })
 
 choice2.addEventListener('click', function () {
-  console.log(choice2.innerText);
   if (correctAnswers.indexOf(choice2.innerText) !== -1) {
+    i++;
     nextQuestion();
   } else {
     choice2.style.backgroundColor = 'red';
     choice2.style.borderColor = 'red';
-        clockStart -= 3;
+    clockStart -= 3;
   }
 })
 
 choice3.addEventListener('click', function () {
-  console.log(choice3.innerText);
   if (correctAnswers.indexOf(choice3.innerText) !== -1) {
+    i++;
     nextQuestion();
   } else {
     choice3.style.backgroundColor = 'red';
     choice3.style.borderColor = 'red';
-        clockStart -= 3;
+    clockStart -= 3;
   }
 })
 
 choice4.addEventListener('click', function () {
-  console.log(choice4.innerText);
   if (correctAnswers.indexOf(choice4.innerText) !== -1) {
+    i++;
     nextQuestion();
   } else {
     choice4.style.backgroundColor = 'red';
     choice4.style.borderColor = 'red';
-        clockStart -= 3;
+    clockStart -= 3;
   }
 
 })
@@ -144,7 +156,8 @@ choice4.addEventListener('click', function () {
 
 // Gets next questions
 function nextQuestion() {
-  i++;
+  console.log(i);
+
   // Reset background color
   choice1.style.backgroundColor = '#007BFF';
   choice2.style.backgroundColor = '#007BFF';
@@ -157,22 +170,29 @@ function nextQuestion() {
   choice3.style.borderColor = '#007BFF';
   choice4.style.borderColor = '#007BFF';
 
+  // Ending card
+  if (i >= (questions.length)) {
+    document.getElementById('highScoreBtn').style.display = 'block';
+    document.querySelector("#question").innerHTML = "Your score: ";
+    document.querySelector("#answer1").style.display = 'none';
+    document.querySelector("#answer2").style.display = 'none';
+    document.querySelector("#answer3").style.display = 'none';
+    document.querySelector("#answer4").style.display = 'none';
+    document.getElementById("timerText").innerText = 123;
+    clearInterval(clock);
+
+  }
+
   // Swap in new question and answers
   document.querySelector("#question").innerHTML = questions[i].question;
   document.querySelector("#answer1").innerHTML = questions[i].answers.a;
   document.querySelector("#answer2").innerHTML = questions[i].answers.b;
   document.querySelector("#answer3").innerHTML = questions[i].answers.c;
   document.querySelector("#answer4").innerHTML = questions[i].answers.d;
-
-  // End
-  if (i == (questions.length - 1)) {
-    document.getElementById('next').innerText = 'End'
-    document.getElementById('highScore').style.display = 'block';
-  }
 }
 
 // High score button
-document.getElementById("highScore").onclick = function () {
+document.getElementById("highScoreBtn").onclick = function () {
   location.href = "highscores.html";
 }
 
