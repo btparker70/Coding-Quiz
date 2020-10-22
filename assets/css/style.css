@@ -21,11 +21,16 @@ body {
     max-height: 65px;
 } */
 
-#timerText {
+#timerText, #timeRemaining {
     font-size: 30px;
     border-radius: 25px;
 }
 
+/* Where quiz takes palce */
 #main {
     background-color: white;
+}
+
+#nameDisplay {
+    font-size: 30px;
 }

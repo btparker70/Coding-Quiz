@@ -1,4 +1,4 @@
-// QUIZ QUESTIONS //
+// QUIZ ASSETS //
 const questions = [
   {
     question: "Which one of these are not a Javascript data type?",
@@ -52,52 +52,40 @@ const questions = [
   },
 ];
 
-var correctAnswers = [
-  questions[0].answers.c,
-  questions[1].answers.a,
-  questions[2].answers.a,
-  questions[3].answers.d,
-  questions[4].answers.c];
+// Quiz correct answers
+var correctAnswers = [questions[0].answers.c, questions[1].answers.a, questions[2].answers.a, questions[3].answers.d, questions[4].answers.c];
 
-// QUIZ FUNCTIONALITY //
+// PAGE FUNCTIONALITY //
+// Starting time for timer
+var timeRemaining = 60;
 
-var clockStart = 60;
-var startClicks = 0;
 // Start button
 document.getElementById("start").addEventListener('click', function () {
-  document.getElementById("timerText").innerText = clockStart;
+  // Shows time remaining
+  document.getElementById("timerText").innerText = timeRemaining;
+  // Reveals quiz block with questions/answers
   document.getElementById("main").style.display = 'block';
-  // countDown();
-
-
-  // Timer
-  // var clockStart = 60;
-  // function countDown() {
-  //   setInterval(function () {
-  //     clockStart--;
-  //     document.getElementById("timerText").innerText = clockStart;
-  //   }, 1000);
-  // }
-  // startClicks++;
-
-
-
-  var clock = setInterval(clockTimer, 1000);
-
-  function clockTimer() {
-    clockStart--;
-    document.getElementById("timerText").innerText = clockStart;
-  }
-
-
-  // function stopClockTimer() {
-  //   clearInterval(clock);
-  // }
+  // Hides start button so that it can't be clicked more than once
+  document.getElementById("start").style.display = 'none';
+  // ...and then shows timer
+  document.getElementById("start2").style.display = 'block';
+  clockTimer();
 })
+
+// Timer functionality
+function clockTimer() {
+  var countdown = setInterval(function() {
+    timeRemaining--;
+    document.getElementById("timeRemaining").innerText = timeRemaining;
+
+    if (timeRemaining <= 0) {
+      clearInterval(countdown);
+    }
+  }, 1000);
+}
 
 // Quiz population
 var i = 0;
-console.log('i= ' + i);
 document.querySelector("#question").innerHTML = questions[i].question;
 document.querySelector("#answer1").innerHTML = questions[i].answers.a;
 document.querySelector("#answer2").innerHTML = questions[i].answers.b;
@@ -119,7 +107,7 @@ choice1.addEventListener('click', function () {
   } else {
     choice1.style.backgroundColor = 'red';
     choice1.style.borderColor = 'red';
-    clockStart -= 3;
+    timeRemaining -= 3;
   }
 })
 
@@ -130,7 +118,7 @@ choice2.addEventListener('click', function () {
   } else {
     choice2.style.backgroundColor = 'red';
     choice2.style.borderColor = 'red';
-    clockStart -= 3;
+    timeRemaining -= 3;
   }
 })
 
@@ -141,7 +129,7 @@ choice3.addEventListener('click', function () {
   } else {
     choice3.style.backgroundColor = 'red';
     choice3.style.borderColor = 'red';
-    clockStart -= 3;
+    timeRemaining -= 3;
   }
 })
 
@@ -152,7 +140,7 @@ choice4.addEventListener('click', function () {
   } else {
     choice4.style.backgroundColor = 'red';
     choice4.style.borderColor = 'red';
-    clockStart -= 3;
+    timeRemaining -= 3;
   }
 
 })
@@ -188,7 +176,7 @@ function nextQuestion() {
     document.getElementById("timerText").innerText = 123;
 
     //Score at end of game
-    score = clockStart;
+    score = timeRemaining;
     localStorage.setItem('score', score);
     document.querySelector("#question").innerHTML = "Your score: " + score;
     console.log(localStorage.getItem('score'));
