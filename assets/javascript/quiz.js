@@ -78,6 +78,10 @@ document.getElementById("start").addEventListener('click', function () {
   //     document.getElementById("timerText").innerText = clockStart;
   //   }, 1000);
   // }
+  // startClicks++;
+
+
+
   var clock = setInterval(clockTimer, 1000);
 
   function clockTimer() {
@@ -85,7 +89,7 @@ document.getElementById("start").addEventListener('click', function () {
     document.getElementById("timerText").innerText = clockStart;
   }
 
-  // startClicks++;
+
   // function stopClockTimer() {
   //   clearInterval(clock);
   // }
@@ -106,6 +110,7 @@ var choice2 = document.getElementById("answer2");
 var choice3 = document.getElementById("answer3");
 var choice4 = document.getElementById("answer4");
 
+//could name classes for these vvv
 // Select choice
 choice1.addEventListener('click', function () {
   if (correctAnswers.indexOf(choice1.innerText) !== -1) {
@@ -152,11 +157,13 @@ choice4.addEventListener('click', function () {
 
 })
 
+// High score names
+var highScores = JSON.parse(localStorage.getItem("games")) || [];
+var score = 0;
 //if right answer chosen, run function below
 
 // Gets next questions
 function nextQuestion() {
-  console.log(i);
 
   // Reset background color
   choice1.style.backgroundColor = '#007BFF';
@@ -179,7 +186,13 @@ function nextQuestion() {
     document.querySelector("#answer3").style.display = 'none';
     document.querySelector("#answer4").style.display = 'none';
     document.getElementById("timerText").innerText = 123;
-    clearInterval(clock);
+
+    //Score at end of game
+    score = clockStart;
+    localStorage.setItem('score', score);
+    document.querySelector("#question").innerHTML = "Your score: " + score;
+    console.log(localStorage.getItem('score'));
+    clearInterval(score);
 
   }
 
@@ -196,9 +209,51 @@ document.getElementById("highScoreBtn").onclick = function () {
   location.href = "highscores.html";
 }
 
-var score = 1;
-localStorage.setItem("high score", score);
-console.log(localStorage.getItem("high score"));
+
+
+//from highscores.js
+
+// // This is the form field
+// var nameForm = document.getElementById('nameForm');
+// // This is where the name appears
+// var nameDisplay = document.getElementById('nameDisplay');
+
+// var i = 0;
+// Name form
+// nameForm.onkeydown = function(e){
+
+//     // var user = {
+//     // name: nameForm.value.trim(),
+//     // };
+
+//     // When enter key pressed
+//     if(e.keyCode == 13){
+//         // If the field isn't blank, add name to array highscores
+//         if (nameForm.value != "") {
+//           var newGame = {
+//             name: nameForm.value.trim(),
+//             score
+//           }
+//         highScores.push(newGame);
+//     }
+//         // Clear the name field
+//         nameForm.value = "";
+//         console.log(highScores);
+//         localStorage.setItem('games', JSON.stringify(highScores));
+//         // nameDisplay.innerHTML = 'name: ' + localStorage.getItem('name') + ' score: ';
+    
+//         var scoreDiv = document.getElementById('nameDisplay');
+
+//         // for (i = 0; i <highScores.length; i++) {
+//           var newScoreDiv = document.createElement('div');
+//           newScoreDiv.textContent = 'Name: ' + nameForm.value.trim() + ' Score: ' + score;
+//           scoreDiv.appendChild(newScoreDiv);
+//           i++;
+//         // }
+//     }
+//  };
+
+
 // End button
 // if (document.getElementById('next').innerText = 'End') {
 //   document.getElementById('next').onclick = function () {

@@ -9,7 +9,7 @@ var nameForm = document.getElementById('nameForm');
 var nameDisplay = document.getElementById('nameDisplay');
 
 // High score names
-var highScores = [];
+var highScores = JSON.parse(localStorage.getItem("games")) || [];
 //
 var i = 0;
 // Name form
@@ -23,25 +23,42 @@ nameForm.onkeydown = function(e){
     if(e.keyCode == 13){
         // If the field isn't blank, add name to array highscores
         if (nameForm.value != "") {
-        highScores.push(nameForm.value.trim());
+            var score = localStorage.getItem('score');
+          var newGame = {
+            name: nameForm.value.trim(),
+            score
+          }
+        highScores.push(newGame);
     }
         // Clear the name field
         nameForm.value = "";
         console.log(highScores);
-        localStorage.setItem('name', highScores[0]);
+        localStorage.setItem('games', JSON.stringify(highScores));
         // nameDisplay.innerHTML = 'name: ' + localStorage.getItem('name') + ' score: ';
     
         var scoreDiv = document.getElementById('nameDisplay');
 
         // for (i = 0; i <highScores.length; i++) {
-          var newScoreDiv = document.createElement('p');
-          newScoreDiv.textContent = 'Name: ' + highScores[i] + ' Score: ';
+          var newScoreDiv = document.createElement('div');
+          newScoreDiv.textContent = 'Name: ' + newGame.name + ' Score: ' + score;
           scoreDiv.appendChild(newScoreDiv);
           i++;
         // }
     }
+  
  };
 
+ function renderHighscores() {
+    var scoreDiv = document.getElementById('nameDisplay');
+    //do something for sorting scores !!!
+    for (i = 0; i <highScores.length; i++){
+        var newScoreDiv = document.createElement('div');
+        newScoreDiv.textContent = 'Name: ' + highScores[i].name + ' Score: ' + highScores[i].score;
+        scoreDiv.appendChild(newScoreDiv);
+    }
+ }
+
+ renderHighscores()
 // localStorage.setItem('name', 'smith');
 
 // Retrieve
