@@ -7,12 +7,12 @@ document.getElementById("quizBtn").onclick = function () {
 var nameForm = document.getElementById('nameForm');
 
 // Output div for name and score
-var nameDisplay = document.getElementById('nameDisplay');
+var highScoreList = document.getElementById('nameDisplay');
 
-// High scores. This takes the "games" object from
+// HIGH SCORES //
+// This takes is the 'games' array of objects,
+// ... or makes an empty array if there are no games
 var highScores = JSON.parse(localStorage.getItem("games")) || [];
-
-console.log(localStorage.getItem("games"));
 
 var i = 0;
 
@@ -20,7 +20,7 @@ var i = 0;
 nameForm.onkeydown = function (e) {
     // When enter key pressed
     if (e.keyCode == 13) {
-        // If the field isn't blank, add name to array highscores
+        // If the field isn't blank, add name and score to highscores array
         if (nameForm.value != "") {
             var score = localStorage.getItem('score');
             var newGame = {
@@ -31,70 +31,25 @@ nameForm.onkeydown = function (e) {
         }
         // Clear the name field
         nameForm.value = "";
-        console.log(highScores);
+
+        // Update 'games' object to current 'high scores'
         localStorage.setItem('games', JSON.stringify(highScores));
-        // nameDisplay.innerHTML = 'name: ' + localStorage.getItem('name') + ' score: ';
 
-        var scoreDiv = document.getElementById('nameDisplay');
-
-        var newScoreDiv = document.createElement('div');
-        newScoreDiv.textContent = 'Name: ' + newGame.name + ' Score: ' + score;
-        scoreDiv.appendChild(newScoreDiv);
+        // Render high scores for user
+        var newScore = document.createElement('div');
+        newScore.textContent = 'Name: ' + newGame.name + ' Score: ' + score;
+        highScoreList.appendChild(newScore);
         i++;
     }
 };
 
+// Shows previous high scores if any are stored
 function renderHighscores() {
-    var scoreDiv = document.getElementById('nameDisplay');
     //do something for sorting scores !!!
     for (i = 0; i < highScores.length; i++) {
-        var newScoreDiv = document.createElement('div');
-        newScoreDiv.textContent = 'Name: ' + highScores[i].name + ' Score: ' + highScores[i].score;
-        scoreDiv.appendChild(newScoreDiv);
+        var newScore = document.createElement('div');
+        newScore.textContent = 'Name: ' + highScores[i].name + ' Score: ' + highScores[i].score;
+        highScoreList.appendChild(newScore);
     }
 }
-
 renderHighscores()
-// localStorage.setItem('name', 'smith');
-
-// Retrieve
-// nameDisplay.innerHTML = 'name: ' + localStorage.getItem('name') + ' score: ';
-
-
-// var firstNameInput = document.querySelector("#first-name");
-// var submitBtn = document.querySelector("#submit");
-// var userFirstNameSpan = document.querySelector("#user-first-name");
-
-
-
-
-
-// submitBtn.addEventListener("click", function(event) {
-//     event.preventDefault();
-
-//     var user = {
-//         firstName: firstNameInput.value.trim(),
-//       };
-
-//       console.log(user);
-//       localStorage.setItem("user", user);
-
-//       var lastUser = localStorage.getItem("user");
-//       userFirstNameSpan.textContent = lastUser.name;
-
-
-// })
-
-
-
-
-
-
-// // document.querySelector("#highScore1").innerHTML = test;
-
-// //var lastUser = localStorage.getItem('high score');
-
-// // document.getElementById('form').addEventListener('submit', function(event){
-// //     event.preventDefault();
-// //     // var formText = 
-// // })
