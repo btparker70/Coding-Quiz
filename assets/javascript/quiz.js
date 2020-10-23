@@ -50,20 +50,20 @@ document.getElementById("start").addEventListener('click', function () {
   nextQuestion();
 })
 
+// Page number of questions
+var pageCount = 0;
+
 // Timer functionality
 function clockTimer() {
   var countdown = setInterval(function () {
     timeRemaining--;
     document.getElementById("timeRemaining").innerText = timeRemaining;
 
-    if (timeRemaining <= 0) {
+    if (timeRemaining <= 0 || pageCount == questions.length) {
       clearInterval(countdown);
     }
   }, 1000);
 }
-
-// Page number of questions
-var pageCount = 0;
 
 // Answer button functionality
 class Choice {
@@ -118,7 +118,14 @@ function endingCard() {
   document.getElementById('highScoreBtn').style.display = 'block';
 
   // Score at end of game
-  score = timeRemaining;
+  if (timeRemaining >= 0) {
+    score = timeRemaining;
+    // Fixes timer always dropping 1 below score
+    timeRemaining += 1;
+  } else {
+    score = 0;
+  }
+
   // Store the game score 
   localStorage.setItem('score', score);
   // Renders score for user to view
