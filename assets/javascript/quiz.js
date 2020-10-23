@@ -2,60 +2,38 @@
 const questions = [
   {
     question: "Which one of these are not a Javascript data type?",
-    answers: {
-      a: "Number",
-      b: "Boolean",
-      c: "Type",
-      d: "String",
-    },
+    answers: ["Number", "Boolean", "Type", "String"],
     correctAnswer: "Type"
   },
   {
     question: "Which one of these returns false?",
-    answers: {
-      a: "var x = 0;",
-      b: "'false'",
-      c: "69",
-      d: "8 + 2",
-    },
+    answers: ["var x = 0;", "'false'", "69", "8 + 2"],
     correctAnswer: "var x = 0;"
   },
   {
     question: "How do you write an alert box?",
-    answers: {
-      a: "alert()",
-      b: "confirm()",
-      c: "say()",
-      d: "prompt()",
-    },
+    answers: ["alert()", "confirm()", "say()", "prompt()"],
     correctAnswer: "alert()"
   },
   {
     question: "How do you start a for loop?",
-    answers: {
-      a: "for (length < i; 1++)",
-      b: "for (var i = 0; length > i)",
-      c: "for (i++)",
-      d: "for (i = 0; i < length; i++)",
-    },
+    answers: ["for (length < i; 1++)", "for (var i = 0; length > i)", "for (i++)", "for (i = 0; i < length; i++)"],
     correctAnswer: "for (i = 0; i < length; i++)"
   },
   {
     question: "How do you write a function?",
-    answers: {
-      a: "function = ()",
-      b: "function.functionName()",
-      c: "function functionName()",
-      d: "var function()",
-    },
+    answers: ["function = ()", "function.functionName()", "function functionName()", "var function()"],
     correctAnswer: "function functionName()"
   },
 ];
 
 // Quiz correct answers
-var correctAnswers = [questions[0].answers.c, questions[1].answers.a, questions[2].answers.a, questions[3].answers.d, questions[4].answers.c];
+var correctAnswers = [questions[0].answers[2], questions[1].answers[0], questions[2].answers[0], questions[3].answers[3], questions[4].answers[2]];
 
 // PAGE FUNCTIONALITY //
+// Page number of questions
+var pageCount = 0;
+
 // Starting time for timer
 var timeRemaining = 60;
 
@@ -70,11 +48,13 @@ document.getElementById("start").addEventListener('click', function () {
   // ...and then shows timer
   document.getElementById("start2").style.display = 'block';
   clockTimer();
+  // Shows first question
+  nextQuestion();
 })
 
 // Timer functionality
 function clockTimer() {
-  var countdown = setInterval(function() {
+  var countdown = setInterval(function () {
     timeRemaining--;
     document.getElementById("timeRemaining").innerText = timeRemaining;
 
@@ -84,55 +64,64 @@ function clockTimer() {
   }, 1000);
 }
 
-// Quiz population
-var i = 0;
-document.querySelector("#question").innerHTML = questions[i].question;
-document.querySelector("#answer1").innerHTML = questions[i].answers.a;
-document.querySelector("#answer2").innerHTML = questions[i].answers.b;
-document.querySelector("#answer3").innerHTML = questions[i].answers.c;
-document.querySelector("#answer4").innerHTML = questions[i].answers.d;
-
-
-// Select choice
-
-// Functionality when clicking choices and their right/wrong answer
+// Answer button functionality
 class Choice {
   constructor(choiceNumber) {
     choiceNumber.addEventListener('click', function () {
-        if (correctAnswers.indexOf(choiceNumber.innerText) !== -1) {
-          i++;
-          nextQuestion();
-        } else {
-          choiceNumber.style.backgroundColor = 'red';
-          choiceNumber.style.borderColor = 'red';
-          timeRemaining -= 3;
+      if (correctAnswers.indexOf(choiceNumber.innerText) !== -1) {
+        for (i = 0; i < pageCount; i++) {
+        document.getElementById('main').removeChild(document.getElementById('answer' + i));
         }
-      })
+        nextQuestion();
+      } else {
+        choiceNumber.style.backgroundColor = 'red';
+        choiceNumber.style.borderColor = 'red';
+        timeRemaining -= 3;
+      }
+    })
   }
 }
 
-// Choices/answers selectors
-var choice1 = document.getElementById("answer1");
-var choice2 = document.getElementById("answer2");
-var choice3 = document.getElementById("answer3");
-var choice4 = document.getElementById("answer4");
+// // Choices/answers selectors
+// var choice1 = document.getElementById("answer1");
+// var choice2 = document.getElementById("answer2");
+// var choice3 = document.getElementById("answer3");
+// var choice4 = document.getElementById("answer4");
 
 // Functionality for choices/answers
-new Choice(choice1);
-new Choice(choice2);
-new Choice(choice3);
-new Choice(choice4);
+// new Choice(document.getElementById("answer1"));
+// new Choice(choice2);
+// new Choice(choice3);
+// new Choice(choice4);
 
 // Question field
-var questionField = document.querySelector("#question")
+// var questionField = document.querySelector("#question");
 
 // High score names
 var highScores = JSON.parse(localStorage.getItem("games")) || [];
 var score = 0;
 //if right answer chosen, run function below
 
+
 // Gets next questions
 function nextQuestion() {
+
+  // Quiz population
+
+
+  // Write question to main card
+  document.querySelector("#question").textContent = questions[pageCount].question;
+
+  // Write answers to main card
+  for (i = 0; i < questions[pageCount].answers.length; i++) {
+    var answerBtn = document.createElement('button');
+    answerBtn.setAttribute('class', 'btn btn-primary btn-lg btn-block');
+    answerBtn.setAttribute('id', 'answer' + i);
+    answerBtn.innerText = questions[pageCount].answers[i];
+    document.getElementById('main').appendChild(answerBtn);
+    new Choice(document.getElementById('answer' + i));
+  }
+  pageCount++;
 
   // Reset background color
   choice1.style.backgroundColor = '#007BFF';
