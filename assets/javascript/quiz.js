@@ -92,58 +92,39 @@ document.querySelector("#answer2").innerHTML = questions[i].answers.b;
 document.querySelector("#answer3").innerHTML = questions[i].answers.c;
 document.querySelector("#answer4").innerHTML = questions[i].answers.d;
 
-// Choices
+
+// Select choice
+
+// Functionality when clicking choices and their right/wrong answer
+class Choice {
+  constructor(choiceNumber) {
+    choiceNumber.addEventListener('click', function () {
+        if (correctAnswers.indexOf(choiceNumber.innerText) !== -1) {
+          i++;
+          nextQuestion();
+        } else {
+          choiceNumber.style.backgroundColor = 'red';
+          choiceNumber.style.borderColor = 'red';
+          timeRemaining -= 3;
+        }
+      })
+  }
+}
+
+// Choices/answers selectors
 var choice1 = document.getElementById("answer1");
 var choice2 = document.getElementById("answer2");
 var choice3 = document.getElementById("answer3");
 var choice4 = document.getElementById("answer4");
 
-//could name classes for these vvv
-// Select choice
-choice1.addEventListener('click', function () {
-  if (correctAnswers.indexOf(choice1.innerText) !== -1) {
-    i++;
-    nextQuestion();
-  } else {
-    choice1.style.backgroundColor = 'red';
-    choice1.style.borderColor = 'red';
-    timeRemaining -= 3;
-  }
-})
+// Functionality for choices/answers
+new Choice(choice1);
+new Choice(choice2);
+new Choice(choice3);
+new Choice(choice4);
 
-choice2.addEventListener('click', function () {
-  if (correctAnswers.indexOf(choice2.innerText) !== -1) {
-    i++;
-    nextQuestion();
-  } else {
-    choice2.style.backgroundColor = 'red';
-    choice2.style.borderColor = 'red';
-    timeRemaining -= 3;
-  }
-})
-
-choice3.addEventListener('click', function () {
-  if (correctAnswers.indexOf(choice3.innerText) !== -1) {
-    i++;
-    nextQuestion();
-  } else {
-    choice3.style.backgroundColor = 'red';
-    choice3.style.borderColor = 'red';
-    timeRemaining -= 3;
-  }
-})
-
-choice4.addEventListener('click', function () {
-  if (correctAnswers.indexOf(choice4.innerText) !== -1) {
-    i++;
-    nextQuestion();
-  } else {
-    choice4.style.backgroundColor = 'red';
-    choice4.style.borderColor = 'red';
-    timeRemaining -= 3;
-  }
-
-})
+// Question field
+var questionField = document.querySelector("#question")
 
 // High score names
 var highScores = JSON.parse(localStorage.getItem("games")) || [];
@@ -168,17 +149,17 @@ function nextQuestion() {
   // Ending card
   if (i >= (questions.length)) {
     document.getElementById('highScoreBtn').style.display = 'block';
-    document.querySelector("#question").innerHTML = "Your score: ";
-    document.querySelector("#answer1").style.display = 'none';
-    document.querySelector("#answer2").style.display = 'none';
-    document.querySelector("#answer3").style.display = 'none';
-    document.querySelector("#answer4").style.display = 'none';
+    questionField.innerHTML = "Your score: ";
+    choice1.style.display = 'none';
+    choice2.style.display = 'none';
+    choice3.style.display = 'none';
+    choice4.style.display = 'none';
     document.getElementById("timerText").innerText = 123;
 
     //Score at end of game
     score = timeRemaining;
     localStorage.setItem('score', score);
-    document.querySelector("#question").innerHTML = "Your score: " + score;
+    questionField.innerHTML = "Your score: " + score;
     console.log(localStorage.getItem('score'));
     clearInterval(score);
 
@@ -186,102 +167,60 @@ function nextQuestion() {
 
   // Swap in new question and answers
   document.querySelector("#question").innerHTML = questions[i].question;
-  document.querySelector("#answer1").innerHTML = questions[i].answers.a;
-  document.querySelector("#answer2").innerHTML = questions[i].answers.b;
-  document.querySelector("#answer3").innerHTML = questions[i].answers.c;
-  document.querySelector("#answer4").innerHTML = questions[i].answers.d;
+  choice1.innerHTML = questions[i].answers.a;
+  choice2.innerHTML = questions[i].answers.b;
+  choice3.innerHTML = questions[i].answers.c;
+  choice4.innerHTML = questions[i].answers.d;
 }
 
-// High score button
+// High score button on last card. Takes user to highscore page.
 document.getElementById("highScoreBtn").onclick = function () {
   location.href = "highscores.html";
 }
 
+// OLD EVENT LISTENERS FOR CHOICES //
 
-
-//from highscores.js
-
-// // This is the form field
-// var nameForm = document.getElementById('nameForm');
-// // This is where the name appears
-// var nameDisplay = document.getElementById('nameDisplay');
-
-// var i = 0;
-// Name form
-// nameForm.onkeydown = function(e){
-
-//     // var user = {
-//     // name: nameForm.value.trim(),
-//     // };
-
-//     // When enter key pressed
-//     if(e.keyCode == 13){
-//         // If the field isn't blank, add name to array highscores
-//         if (nameForm.value != "") {
-//           var newGame = {
-//             name: nameForm.value.trim(),
-//             score
-//           }
-//         highScores.push(newGame);
-//     }
-//         // Clear the name field
-//         nameForm.value = "";
-//         console.log(highScores);
-//         localStorage.setItem('games', JSON.stringify(highScores));
-//         // nameDisplay.innerHTML = 'name: ' + localStorage.getItem('name') + ' score: ';
-    
-//         var scoreDiv = document.getElementById('nameDisplay');
-
-//         // for (i = 0; i <highScores.length; i++) {
-//           var newScoreDiv = document.createElement('div');
-//           newScoreDiv.textContent = 'Name: ' + nameForm.value.trim() + ' Score: ' + score;
-//           scoreDiv.appendChild(newScoreDiv);
-//           i++;
-//         // }
-//     }
-//  };
-
-
-// End button
-// if (document.getElementById('next').innerText = 'End') {
-//   document.getElementById('next').onclick = function () {
-//     location.href = "highscores.html";
+// choice1.addEventListener('click', function () {
+//   if (correctAnswers.indexOf(choice1.innerText) !== -1) {
+//     i++;
+//     nextQuestion();
+//   } else {
+//     choice1.style.backgroundColor = 'red';
+//     choice1.style.borderColor = 'red';
+//     timeRemaining -= 3;
 //   }
-// }
+// })
 
-
-//var.event.target.getattribute(#id)
-
-// //button that changes color. change div colors
-// var button = document.querySelector(".button");
-
-// function changeBlue(event) {
-//   event.stopPropagation();
-//   event.currentTarget.setAttribute(
-//     "style",
-//     "background-color: blue"
-//   );
-// }
-
-
-// document.getElementById('next').addEventListener('click', function () {
-//   i++;
-//   // Reset background color
-//   choice1.style.backgroundColor = '#007BFF';
-//   choice2.style.backgroundColor = '#007BFF';
-//   choice3.style.backgroundColor = '#007BFF';
-//   choice4.style.backgroundColor = '#007BFF';
-
-//   // Swap in new question and answers
-//   document.querySelector("#question").innerHTML = questions[i].question;
-//   document.querySelector("#answer1").innerHTML = questions[i].answers.a;
-//   document.querySelector("#answer2").innerHTML = questions[i].answers.b;
-//   document.querySelector("#answer3").innerHTML = questions[i].answers.c;
-//   document.querySelector("#answer4").innerHTML = questions[i].answers.d;
-
-//   // End
-//   if (i == (questions.length - 1)){
-//   document.getElementById('next').innerText = 'End'
-//   document.getElementById('highScore').style.display = 'block';
+// choice2.addEventListener('click', function () {
+//   if (correctAnswers.indexOf(choice2.innerText) !== -1) {
+//     i++;
+//     nextQuestion();
+//   } else {
+//     choice2.style.backgroundColor = 'red';
+//     choice2.style.borderColor = 'red';
+//     timeRemaining -= 3;
 //   }
+// })
+
+// choice3.addEventListener('click', function () {
+//   if (correctAnswers.indexOf(choice3.innerText) !== -1) {
+//     i++;
+//     nextQuestion();
+//   } else {
+//     choice3.style.backgroundColor = 'red';
+//     choice3.style.borderColor = 'red';
+//     timeRemaining -= 3;
+//   }
+// })
+
+// choice4.addEventListener('click', function () {
+//   if (correctAnswers.indexOf(choice4.innerText) !== -1) {
+//     i++;
+//     nextQuestion();
+//   } else {
+//     choice4.style.backgroundColor = 'red';
+//     choice4.style.borderColor = 'red';
+//     timeRemaining -= 3;
+//   }
+
 // })
