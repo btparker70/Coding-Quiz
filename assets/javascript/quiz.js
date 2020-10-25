@@ -7,12 +7,12 @@ const questions = [
   },
   {
     question: "Which one of these returns false?",
-    answers: ["var x = 0;", "'false'", "69", "8 + 2"],
+    answers: ["var x = 0;", "'false'"], // , "69", "8 + 2"
     correctAnswer: "var x = 0;"
   },
   {
     question: "How do you write an alert box?",
-    answers: ["alert()", "confirm()", "say()", "prompt()"],
+    answers: ["alert()", "confirm()", "say()", "prompt()", "show()"],
     correctAnswer: "alert()"
   },
   {
@@ -25,10 +25,15 @@ const questions = [
     answers: ["function = ()", "function.functionName()", "function functionName()", "var function()"],
     correctAnswer: "function functionName()"
   },
+  {
+    question: "'123' is a string.",
+    answers: ["True", "False"],
+    correctAnswer: "True"
+  },
 ];
 
 // Quiz correct answers
-var correctAnswers = [questions[0].answers[2], questions[1].answers[0], questions[2].answers[0], questions[3].answers[3], questions[4].answers[2]];
+var correctAnswers = [questions[0].answers[2], questions[1].answers[0], questions[2].answers[0], questions[3].answers[3], questions[4].answers[2], questions[5].answers[0]];
 
 // PAGE FUNCTIONALITY //
 
@@ -50,6 +55,11 @@ document.getElementById("start").addEventListener('click', function () {
   nextQuestion();
 })
 
+// Reload page/try again
+document.getElementById("start2").onclick = function () {
+  location.href = "index.html";
+}
+
 // Page number of questions
 var pageCount = 0;
 
@@ -59,8 +69,11 @@ function clockTimer() {
     timeRemaining--;
     document.getElementById("timeRemaining").innerText = timeRemaining;
 
+    // Ends game and send to score page
     if (timeRemaining <= 0 || pageCount == questions.length) {
       clearInterval(countdown);
+      removeAnswers();
+      endingCard();
     }
   }, 1000);
 }
@@ -69,10 +82,9 @@ function clockTimer() {
 class Choice {
   constructor(choiceNumber) {
     choiceNumber.addEventListener('click', function () {
+      // Correct answer
       if (correctAnswers.indexOf(choiceNumber.innerText) !== -1) {
-        for (i = 0; i < questions[pageCount].answers.length; i++) {
-          document.getElementById('main').removeChild(document.getElementById('answer' + i));
-        }
+        removeAnswers();
         pageCount++;
         nextQuestion();
       } else {
@@ -81,6 +93,13 @@ class Choice {
         timeRemaining -= 3;
       }
     })
+  }
+}
+
+// Remove answers
+function removeAnswers() {
+  for (i = 0; i < questions[pageCount].answers.length; i++) {
+    document.getElementById('main').removeChild(document.getElementById('answer' + i));
   }
 }
 
@@ -110,7 +129,6 @@ function nextQuestion() {
 }
 
 // SCORING AND LOCAL STORAGE //
-// var highScores = JSON.parse(localStorage.getItem("games")) || [];
 var score = 0;
 
 function endingCard() {
@@ -120,9 +138,9 @@ function endingCard() {
   // Score at end of game
   if (timeRemaining >= 0) {
     score = timeRemaining;
-    // Fixes timer always dropping 1 below score
     timeRemaining += 1;
   } else {
+    document.getElementById("timeRemaining").innerText = 'Try agian';
     score = 0;
   }
 
